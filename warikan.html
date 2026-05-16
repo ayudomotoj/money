@@ -716,6 +716,11 @@
       <div class="card-title">支払い追加</div>
 
       <div class="form-group">
+        <label>日付</label>
+        <input type="date" id="expense-date">
+      </div>
+
+      <div class="form-group">
         <label>内容</label>
         <input type="text" id="desc" placeholder="例: 夕食、タクシー、買い物…" maxlength="30">
       </div>
@@ -1004,13 +1009,14 @@
       paidBy: state.selectedPayer,
       shares,
       splitType: state.splitType,
-      date: new Date().toLocaleDateString('ja-JP', {month:'numeric', day:'numeric'}),
+      date: (() => { const d = new Date(document.getElementById('expense-date').value + 'T00:00:00'); return (d.getMonth()+1) + '/' + d.getDate(); })(),
     });
 
     saveState();
     render();
 
     // Reset form
+    document.getElementById('expense-date').value = new Date().toLocaleDateString('sv'); // YYYY-MM-DD
     document.getElementById('desc').value = '';
     document.getElementById('amount').value = '';
     document.getElementById('share0').value = '';
@@ -1275,6 +1281,7 @@
   loadState();
   render();
   renderSettlements();
+  document.getElementById('expense-date').value = new Date().toLocaleDateString('sv'); // YYYY-MM-DD
 
   // PWA service worker
   if ('serviceWorker' in navigator) {
