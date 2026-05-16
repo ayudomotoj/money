@@ -676,9 +676,9 @@
   <div class="card">
     <div class="card-title">メンバー設定</div>
     <div class="people-row">
-      <input type="text" id="name0" placeholder="Aさん" maxlength="10">
+      <input type="text" id="name0" placeholder="ayu" maxlength="10">
       <span class="vs">VS</span>
-      <input type="text" id="name1" placeholder="Bさん" maxlength="10">
+      <input type="text" id="name1" placeholder="もつ" maxlength="10">
     </div>
   </div>
 
@@ -820,9 +820,60 @@
 </div>
 
 <script>
+  // Lightsplit「もつ2」履歴データ (2026/3/4〜5/16)
+  // paidBy: 0=ayu, 1=もつ / shares: [ayuの負担, もつの負担]
+  const INITIAL_EXPENSES = [
+    {id:46,desc:"映画正直不動産",amount:4000,paidBy:0,shares:[2000,2000],splitType:"equal",date:"5/16"},
+    {id:45,desc:"ジュース",amount:896,paidBy:0,shares:[586,310],splitType:"custom",date:"5/16"},
+    {id:44,desc:"サイゼリヤ",amount:2550,paidBy:1,shares:[950,1600],splitType:"custom",date:"5/16"},
+    {id:43,desc:"陽山道",amount:3500,paidBy:0,shares:[1750,1750],splitType:"equal",date:"5/15"},
+    {id:42,desc:"夜",amount:800,paidBy:0,shares:[400,400],splitType:"equal",date:"5/12"},
+    {id:41,desc:"やまと",amount:2660,paidBy:1,shares:[1180,1480],splitType:"custom",date:"5/12"},
+    {id:40,desc:"タイ料理",amount:5038,paidBy:1,shares:[2519,2519],splitType:"equal",date:"5/11"},
+    {id:39,desc:"錦糸町ラーメン",amount:2050,paidBy:0,shares:[1100,950],splitType:"custom",date:"5/9"},
+    {id:38,desc:"やまと",amount:5822,paidBy:1,shares:[2245,3577],splitType:"custom",date:"5/8"},
+    {id:37,desc:"昼",amount:522,paidBy:0,shares:[261,261],splitType:"equal",date:"5/8"},
+    {id:36,desc:"ペッパーランチ",amount:2470,paidBy:1,shares:[890,1580],splitType:"custom",date:"5/6"},
+    {id:35,desc:"ポテト&たこ焼き",amount:1400,paidBy:0,shares:[700,700],splitType:"equal",date:"5/6"},
+    {id:34,desc:"串カツ田中",amount:4939,paidBy:1,shares:[2002,2937],splitType:"custom",date:"5/6"},
+    {id:33,desc:"入江カレー",amount:2140,paidBy:1,shares:[990,1150],splitType:"custom",date:"5/5"},
+    {id:32,desc:"両国フェス",amount:2200,paidBy:0,shares:[1400,800],splitType:"custom",date:"4/26"},
+    {id:31,desc:"ミニストップ",amount:1004,paidBy:1,shares:[430,574],splitType:"custom",date:"4/25"},
+    {id:30,desc:"お好み焼き",amount:6600,paidBy:0,shares:[3600,3000],splitType:"custom",date:"4/25"},
+    {id:29,desc:"武士道ラーメン",amount:2130,paidBy:1,shares:[990,1140],splitType:"custom",date:"4/24"},
+    {id:28,desc:"昼昼",amount:900,paidBy:0,shares:[450,450],splitType:"equal",date:"4/20"},
+    {id:27,desc:"高島屋 のり弁お弁当",amount:4651,paidBy:0,shares:[2326,2325],splitType:"equal",date:"4/18"},
+    {id:26,desc:"高島屋 パキッとコーヒー",amount:2500,paidBy:1,shares:[1250,1250],splitType:"equal",date:"4/18"},
+    {id:25,desc:"高島屋 卵焼き定食",amount:6160,paidBy:0,shares:[3080,3080],splitType:"equal",date:"4/18"},
+    {id:24,desc:"バーガーキング",amount:2460,paidBy:0,shares:[1590,870],splitType:"custom",date:"4/17"},
+    {id:23,desc:"吉野家",amount:1834,paidBy:1,shares:[877,957],splitType:"custom",date:"4/16"},
+    {id:22,desc:"昼",amount:750,paidBy:0,shares:[375,375],splitType:"equal",date:"4/14"},
+    {id:21,desc:"デニーズ",amount:2729,paidBy:0,shares:[1546,1183],splitType:"custom",date:"4/13"},
+    {id:20,desc:"陽山道",amount:3500,paidBy:1,shares:[1750,1750],splitType:"equal",date:"4/10"},
+    {id:19,desc:"夕昼",amount:2045,paidBy:0,shares:[1023,1022],splitType:"equal",date:"4/7"},
+    {id:18,desc:"CoCo壱",amount:3005,paidBy:1,shares:[972,2033],splitType:"custom",date:"4/7"},
+    {id:17,desc:"絶好鳥焼き鳥",amount:1550,paidBy:1,shares:[775,775],splitType:"equal",date:"3/25"},
+    {id:16,desc:"陽山道",amount:3500,paidBy:1,shares:[1750,1750],splitType:"equal",date:"3/24"},
+    {id:15,desc:"はなの舞",amount:1283,paidBy:0,shares:[642,641],splitType:"equal",date:"3/24"},
+    {id:14,desc:"山内農場",amount:749,paidBy:1,shares:[375,374],splitType:"equal",date:"3/23"},
+    {id:13,desc:"ファミマ",amount:334,paidBy:0,shares:[194,140],splitType:"custom",date:"3/23"},
+    {id:12,desc:"船堀タワーランチ",amount:2760,paidBy:1,shares:[980,1780],splitType:"custom",date:"3/22"},
+    {id:11,desc:"吉野家",amount:2032,paidBy:0,shares:[1155,877],splitType:"custom",date:"3/22"},
+    {id:10,desc:"ドミノピザ",amount:1730,paidBy:0,shares:[790,940],splitType:"custom",date:"3/20"},
+    {id:9,desc:"ファミマ",amount:722,paidBy:0,shares:[377,345],splitType:"custom",date:"3/20"},
+    {id:8,desc:"ケンタッキー",amount:2000,paidBy:1,shares:[930,1070],splitType:"custom",date:"3/19"},
+    {id:7,desc:"夕昼昼",amount:2138,paidBy:1,shares:[1069,1069],splitType:"equal",date:"3/18"},
+    {id:6,desc:"昼",amount:638,paidBy:0,shares:[319,319],splitType:"equal",date:"3/17"},
+    {id:5,desc:"未払い",amount:2705,paidBy:1,shares:[2705,0],splitType:"custom",date:"3/17"},
+    {id:4,desc:"バーミヤン",amount:2361,paidBy:1,shares:[988,1373],splitType:"custom",date:"3/17"},
+    {id:3,desc:"ファミマ",amount:896,paidBy:0,shares:[214,682],splitType:"custom",date:"3/14"},
+    {id:2,desc:"夕",amount:622,paidBy:0,shares:[311,311],splitType:"equal",date:"3/13"},
+    {id:1,desc:"夕昼",amount:1974,paidBy:0,shares:[987,987],splitType:"equal",date:"3/4"},
+  ];
+
   // State
   let state = {
-    names: ['Aさん', 'Bさん'],
+    names: ['ayu', 'もつ'],
     expenses: [],
     settlements: [],
     selectedPayer: -1,
@@ -834,9 +885,14 @@
     const saved = localStorage.getItem('warikan-v1');
     if (saved) {
       const data = JSON.parse(saved);
-      state.names = data.names || ['Aさん', 'Bさん'];
+      state.names = data.names || ['ayu', 'もつ'];
       state.expenses = data.expenses || [];
       state.settlements = data.settlements || [];
+    } else {
+      // 初回起動時：Lightsplit履歴を自動インポート
+      state.names = ['ayu', 'もつ'];
+      state.expenses = INITIAL_EXPENSES;
+      saveState();
     }
     document.getElementById('name0').value = state.names[0];
     document.getElementById('name1').value = state.names[1];
