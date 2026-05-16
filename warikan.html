@@ -329,8 +329,8 @@
       flex-shrink: 0;
     }
 
-    .expense-icon.p0 { background: var(--primary-light); }
-    .expense-icon.p1 { background: var(--secondary-light); }
+    .expense-icon.p0 { background: #ffe0f0; }
+    .expense-icon.p1 { background: #dff3ff; }
 
     .expense-body { flex: 1; min-width: 0; }
 
@@ -728,8 +728,8 @@
       <div class="form-group">
         <label>支払った人</label>
         <div class="payer-select">
-          <button class="payer-btn" id="payer-btn-0" onclick="selectPayer(0)">👤 Aさん</button>
-          <button class="payer-btn" id="payer-btn-1" onclick="selectPayer(1)">👤 Bさん</button>
+          <button class="payer-btn" id="payer-btn-0" onclick="selectPayer(0)">🐶 ayu</button>
+          <button class="payer-btn" id="payer-btn-1" onclick="selectPayer(1)">🍅 もつ</button>
         </div>
       </div>
 
@@ -932,8 +932,8 @@
   }
 
   function updatePayerBtnLabels() {
-    document.getElementById('payer-btn-0').textContent = '👤 ' + (state.names[0] || 'Aさん');
-    document.getElementById('payer-btn-1').textContent = '👤 ' + (state.names[1] || 'Bさん');
+    document.getElementById('payer-btn-0').textContent = '🐶 ' + (state.names[0] || 'ayu');
+    document.getElementById('payer-btn-1').textContent = '🍅 ' + (state.names[1] || 'もつ');
   }
 
   function selectSplit(type) {
@@ -1110,7 +1110,7 @@
       container.innerHTML = `<ul class="expense-list">
         ${state.expenses.map(e => `
           <li class="expense-item">
-            <div class="expense-icon p${e.paidBy}">${e.paidBy === 0 ? '👤' : '👤'}</div>
+            <div class="expense-icon p${e.paidBy}">${e.paidBy === 0 ? '🐶' : '🍅'}</div>
             <div class="expense-body">
               <div class="expense-desc">${escHtml(e.desc)}</div>
               <div class="expense-meta">${e.date} · ${escHtml(n[e.paidBy])}が支払い · ${splitLabel(e)}</div>
